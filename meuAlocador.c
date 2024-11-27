@@ -114,6 +114,8 @@ void* alocaMem(int num_bytes)
       *((long int*)(aux + 16 + num_bytes)) = 0;
       *((long int*)(aux + 32 + num_bytes)) = topoAtualHeap - *(long int*)(aux + 32 + num_bytes);
       *((long int*)(ultimoBloco + 8)) = num_bytes;
+
+      melhorBloco = ultimoBloco;
    }
 
    return (melhorBloco + 16);
