@@ -72,7 +72,6 @@ fora_if_c2:
    movq 16(%rbp), %rax
    subq $16, %rax
    movq $0, (%rax)
-
    # percorreHeap  = topoInicialHeap + 1;
    # primeiroLivre = topoInicialHeap;
    # while (percorreHeap < topoAtualHeap)
@@ -80,7 +79,6 @@ fora_if_c2:
    movq TOPO_INICIAL_HEAP, %rax
    addq $1, %rax
    movq %rax, -8(%rbp)
-   
    movq TOPO_INICIAL_HEAP, %rbx
    movq %rbx, -16(%rbp)
 while_percorre:
@@ -88,7 +86,6 @@ while_percorre:
    movq -16(%rbp), %rbx
    cmpq %rbx, %rax
    jge fora_while_percorre
-
    # -if (*percorreHeap == 1)
    #    primeiroLivre = percorreHeap;
    movq $1, %r10
@@ -103,7 +100,6 @@ fora_if_aloc:
    addq $16, %rbx
    addq %rbx, %rax
    movq %rax, -8(%rbp)
-
 fora_while_percorre:
    # -if (primeiroLivre == topoInicialHeap)
    #     ...
@@ -199,7 +195,6 @@ imprimeMapa:
    # p := topoInicialHeap + 1
    movq TOPO_INICIAL_HEAP, %rax
    addq $1, %rax  
-
    # -if (p >= topoAtualHeap)
    #     printf("<vazio>\n");           
    movq %rax, -8(%rbp)             
@@ -207,8 +202,7 @@ imprimeMapa:
    cmpq %rax, -8(%rbp)        
    jl fora_if                      
    movq STR_VAZIO, %rdi            
-   call printf
-                     
+   call printf                
 fora_if:
    # while (p < topoAtualHeap)
    #    ...
@@ -221,7 +215,6 @@ while:
    addq $8, %rax
    movq (%rax), %rbx
    movq %rbx, -24(%rbp)
-
    # for (i = 0; i < 15; ++i)
    #    printf("#"); 
    movq $0, -16(%rbp)
@@ -235,7 +228,6 @@ for_hash:
    addq $1, %rax
    movq %rax, -16(%rbp)
    jmp for_hash
-
 fora_for_hash:
    # -if ( *p == 0 ) -> Bloco LIVRE
    #    ...
@@ -246,7 +238,6 @@ fora_for_hash:
    movq $0, %rbx
    cmpq %rbx, %rax                 
    jne else_livre
-   
    # for (i = 0; i < n_bytes; ++i)
    #    printf("-");                
    movq $0, -16(%rbp)            
@@ -260,7 +251,6 @@ for_menos:
    addq $1, %rax
    movq %rax, -16(%rbp)
    jmp for_menos
-
 else_livre:
    # for (i = 0; i < n_bytes; ++i)
    #    printf("+");
@@ -275,15 +265,13 @@ for_mais:
    addq $1, %rax
    movq %rax, -16(%rbp)
    jmp for_mais
-
 fora_if_livre:
    # p += n_bytes + 16
    movq -24(%rbp), %rax         
    movq -8(%rbp), %rbx          
    addq $16, %rax               
    addq %rax, %rbx              
-   movq %rbx, -8(%rbp)          
-                                
+   movq %rbx, -8(%rbp)                                  
 fora_while:
    # printf("\n");
    movq STR_NOVA_LINHA, %rdi    
