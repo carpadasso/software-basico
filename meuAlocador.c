@@ -21,10 +21,9 @@ int liberaMem(void *bloco)
 {
    void *percorreHeap;
    void *primeiroLivre;
-
    long int num_blocos;
 
-   if (bloco <= topoInicialHeap) return 0;
+   if (bloco <= topoInicialHeap || bloco > topoAtualHeap) return 0;
    
    // Uma única tacada:
    // Primeiros 08 Bytes do Header = ZERO
@@ -66,7 +65,6 @@ void* alocaMem(int num_bytes)
    void *percorreHeap;
    void *ultimoBloco;
    void *melhorBloco;
-
    long int num_blocos;
 
    // Primeiro Passo: Percorrer a Heap e achar o MelhorBloco
