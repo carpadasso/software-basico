@@ -81,7 +81,7 @@ fora_if_c2:
    movq %rax, -8(%rbp)
    movq TOPO_INICIAL_HEAP, %rbx
    movq %rbx, -16(%rbp)
-while_percorre:
+while_percorre_1:
    movq -8(%rbp), %rax
    movq -16(%rbp), %rbx
    cmpq %rbx, %rax
@@ -90,9 +90,9 @@ while_percorre:
    #    primeiroLivre = percorreHeap;
    movq $1, %r10
    cmp %r10, %rax
-   jne fora_if_aloc
+   jne fora_if_alocado
    movq %rax, -16(%rbp)
-fora_if_aloc:
+fora_if_alocado:
    # percorreHeap += *(percorreHeap + 8) + 16;
    movq %rax, %rbx
    addq $8, %rbx
@@ -100,6 +100,7 @@ fora_if_aloc:
    addq $16, %rbx
    addq %rbx, %rax
    movq %rax, -8(%rbp)
+   jmp while_percorre_1
 fora_while_percorre:
    # -if (primeiroLivre == topoInicialHeap)
    #     ...
@@ -183,7 +184,7 @@ alocaMem:
    movq %rax, -8(%rbp)
    # while (percorreHeap <= topoAtualHeap)
    #    ...
-while_percorre:
+while_percorre_2:
    movq -8(%rbp), %rax
    movq TOPO_ATUAL_HEAP, %rbx
    cmpq %rbx, %rax
@@ -229,6 +230,7 @@ fim_if:
    addq $16, %rbx
    addq %rbx, %rax
    movq %rax, -8(%rbp)
+   jmp while_percorre_2
 fim_while_percorre:
    # -if (melhorBloco != NULL)
    #     ...
@@ -459,7 +461,8 @@ fora_if_livre:
    movq -8(%rbp), %rbx          
    addq $16, %rax               
    addq %rax, %rbx              
-   movq %rbx, -8(%rbp)                                  
+   movq %rbx, -8(%rbp)
+   jmp while                             
 fora_while:
    # printf("\n");
    movq STR_NOVA_LINHA, %rdi    
