@@ -2,18 +2,18 @@
 #include "meuAlocador.h"
 
 int main (long int argc, char** argv) {
-  void *a, *b;
+  void *a = NULL, *b = NULL;
 
   // Não vamos cagar nossa Brk!
   printf("Iniciando alocador...\n");
 
-  iniciaAlocador();               // Impressão esperada
-  imprimeMapa();                  // <vazio>
+  iniciaAlocador();                 // Impressão esperada
+  imprimeMapa();                    // <vazio>
 
-  a = (void *) alocaMem(10000);
+  a = (void *) alocaMem(1000);
   imprimeMapa();                  // ################**********
 
-  b = (void *) alocaMem(4000);
+  b = (void *) alocaMem(400);
   imprimeMapa();                  // ################**********##############****
 
   liberaMem(a);
@@ -21,7 +21,7 @@ int main (long int argc, char** argv) {
 
   liberaMem(b);                   
   imprimeMapa();                  // ################----------------------------
-                                  // ou
-                                  // <vazio>
+                                    // ou
+                                    // <vazio>
   finalizaAlocador();
 }
